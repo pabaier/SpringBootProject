@@ -1,4 +1,4 @@
-package edu.cofc.hello;
+package edu.cofc.Hello;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
