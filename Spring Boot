@@ -1,0 +1,126 @@
+Spring is huge java framework for building web apps
+Spring Boot abstracts common configurations to make it easier to start
+Maven is a build and dependency managment tool in pom.xml
+
+1. create maven default (simple) project
+
+2. add <parent> to pom.xml with spring boot starter parent
+	(can get from mvnrepository.com just remove <dependency> tags
+	should include groupId, artifactId, version
+
+3. dependencies
+	spring boot starter web
+
+4. java version
+	in <properties>
+		<java.version>1.8</java.version>
+
+https://www.youtube.com/watch?v=h581CNFdjDc&list=PLqq-6Pq4lTTbx8p2oCgcAQGQyqN8XeA1x&index=10
+5. set up main method in src/main/java/[package directory]
+
+	import org.springframework.boot.SpringApplication;
+	import org.springframework.boot.autoconfigure.SpringBootApplication;
+	@SpringBootApplication
+
+	in main method:
+	        SpringApplication.run(App.class, args);
+
+6. compile
+	mvn compiler:compile
+
+7. run app
+	mvn spring-boot:run
+
+8. check app at localhost:8080
+
+https://www.youtube.com/watch?v=oRFCeRVWCNE&list=PLqq-6Pq4lTTbx8p2oCgcAQGQyqN8XeA1x&index=11
+9. RESTful API
+	@RestController
+	@RequestMapping("[/route]")
+	import org.springframework.web.bind.annotation.RestController;
+	import org.springframework.web.bind.annotation.RequestMapping;
+	http://localhost:8080/hello
+
+10. Spring business service
+	singleton that spring creates when app starts
+	other classes can depend on this class and know it will be initialized automatically
+	@Service
+	import org.springframework.stereotype.Service
+
+	can create a private object of business service type in another dependent class
+	need to use @Autowried annotation on object
+	@Autowired
+		this will automatically initialize the object to type of business service
+		then it can be used within this dependent class
+	import org.springframework.beans.factory.annotation.Autowired;
+
+11. Getting a single resource (GET - READ)
+	add method that takes String parameter that maps to url
+	map url with
+	    @RequestMapping("/topic/{foo}")
+	    method(@PathVariable(String foo)
+	import org.springframework.web.bind.annotation.PathVariable;
+
+	if @RequestMapping variable name is different from parameter name (should not be...)
+	@RequestMapping("/topic/{foo}")
+	public Topic getTopic(@PathVariable("foo") String id) {
+
+12. Post request (POST - CREATE)
+	@RequestMapping
+		get is default 
+	@RequestMapping(method=RequestMethod.POST, value="topics/")
+	import org.springframework.web.bind.annotation.RequestBody;
+	import org.springframework.web.bind.annotation.RequestMethod;
+
+	can use Postman chrome plugin to send custom post requests with bodies
+		raw body
+		headers key: Content-Type value: application/json
+
+13. UPDATE - UPDATE, DELETE - DELETE
+	@RequestMapping(method=RequestMethod.PUT, value="topics/{id}")
+	public void updateTopic(@RequestBody Topic topic, @PathVariable String id) {
+		topicService.updateTopic(topic, id);
+	}
+
+	@RequestMapping(method=RequestMethod.DELETE, value="topics/{id}")
+	public void deleteTopic(@PathVariable String id) {
+		topicService.deleteTopic(id);
+	}
+
+14. Application Properties
+	In src/main add a folder resources
+	In resources add file application.properties
+		add line server.port=8081 (changes the port)
+	common applicaton properties
+	https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+
+15. Database
+	Add data jpa and apache derby to pom (set derby scope to runtime)
+	jpa is an api for database
+	derby is an on the fly database (good for quick prototyping)
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-data-jpa</artifactId>
+		<version>1.5.9.RELEASE</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.derby</groupId>
+		<artifactId>derby</artifactId>
+		<version>10.14.1.0</version>
+		<scope>runtime</scope>
+	</dependency>
+
+16.
+
+
+
+
+
+
+
+
+
+EXTRAS:
+	mvn dependency:purge-local-repository
+	mvn clean
+
